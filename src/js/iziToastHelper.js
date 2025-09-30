@@ -12,6 +12,15 @@ export function showError(message) {
   });
 }
 
+export function showInfo(message) {
+  iziToast.info({
+    ...commonStyles,
+    message: message,
+    color: '#09f',
+    icon: 'icon-bell',
+  });
+}
+
 export function showOk(message) {
   iziToast.success({
     ...commonStyles,

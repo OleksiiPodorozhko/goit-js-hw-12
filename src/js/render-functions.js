@@ -51,11 +51,17 @@ export function hideLoader() {
   refs.loader.classList.add('hidden');
 }
 
-export function showLoadMore() {
+export function showLoadMoreButton() {
   refs.loadMoreBtn.classList.remove('hidden');
-  refs.loadMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'end' })
 }
 
-export function hideLoadMore() {
+export function hideLoadMoreButton() {
   refs.loadMoreBtn.classList.add('hidden');
+}
+
+export function scrollDown() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
 }

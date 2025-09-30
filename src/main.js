@@ -3,9 +3,10 @@ import {
   clearGallery,
   createGallery,
   hideLoader,
-  hideLoadMore,
+  hideLoadMoreButton,
+  scrollDown,
   showLoader,
-  showLoadMore,
+  showLoadMoreButton,
 } from './js/render-functions.js';
 import { refs } from './js/refs.js';
 
@@ -15,33 +16,35 @@ let lastQuery = '';
 refs.form.addEventListener('submit', async e => {
   e.preventDefault();
   const inputValue = e.target.elements['search-text'].value.trim();
+  page = 1;
 
   if (!inputValue) return;
 
   e.target.reset();
   clearGallery();
   showLoader();
-  hideLoadMore();
+  hideLoadMoreButton();
   lastQuery = inputValue;
 
   try {
-    const images = await getImagesByQuery(inputValue, page);
+    const { images, isLastPage } = await getImagesByQuery(inputValue, page);
     createGallery(images);
     page++;
-    showLoadMore();
+    !isLastPage && showLoadMoreButton();
   } finally {
     hideLoader();
   }
 });
 
 refs.loadMoreBtn.addEventListener('click', async () => {
-  hideLoadMore();
+  hideLoadMoreButton();
   showLoader();
   try {
-    const images = await getImagesByQuery(lastQuery, page);
+    const { images, isLastPage } = await getImagesByQuery(lastQuery, page);
     createGallery(images);
     page++;
-    showLoadMore();
+    !isLastPage && showLoadMoreButton();
+    scrollDown();
   } finally {
     hideLoader();
   }

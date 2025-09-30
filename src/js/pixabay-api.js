@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { showError } from './iziToastHelper.js';
+import { showError, showInfo } from './iziToastHelper.js';
 
 const key = '52494269-f940d25beafa0bafe61525357';
 const url = 'https://pixabay.com/api/';
-const imagesPerPage = 9;
+const perPage = 9;
 
 export async function getImagesByQuery(query, page) {
   try {
@@ -14,13 +14,19 @@ export async function getImagesByQuery(query, page) {
       showError(
         'Sorry, there are no images matching your search query. Please try again!'
       );
-      return [];
+      return { images: [], isLastPage: true };
     }
 
-    return images;
+    const isLastPage = getIsLastPage(response.data.totalHits, page);
+
+    if (isLastPage) {
+      showInfo('You have reached the end of the gallery!');
+    }
+
+    return { images: images, isLastPage: isLastPage };
   } catch (error) {
     showError(error.message);
-    return [];
+    return { images: [], isLastPage: true };
   }
 }
 
@@ -32,8 +38,13 @@ function getParams(query, page) {
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
-      per_page: imagesPerPage,
+      per_page: perPage,
       page: page,
     },
   };
+}
+
+function getIsLastPage(totalHits, page) {
+  const total_pages = Math.ceil(totalHits / perPage);
+  return page >= total_pages;
 }
