@@ -7,14 +7,17 @@ import {
 } from './js/render-functions.js';
 import { refs } from './js/refs.js';
 
-refs.form.addEventListener('submit', e => {
+refs.form.addEventListener('submit', async e => {
   e.preventDefault();
   const inputValue = e.target.elements['search-text'].value.trim();
 
   if (!inputValue) return;
   clearGallery();
   showLoader();
-  getImagesByQuery(inputValue)
-    .then(images => createGallery(images))
-    .finally(hideLoader);
+  try {
+    const images = await getImagesByQuery(inputValue);
+    createGallery(images);
+  } finally {
+    hideLoader();
+  }
 });

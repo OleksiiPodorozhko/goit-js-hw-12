@@ -5,7 +5,7 @@ import { refs } from './refs.js';
 const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionDelay: 250});
 
 export function createGallery(images) {
-  const markup =
+  refs.gallery.innerHTML =
     images
       .map(
         image =>
@@ -35,7 +35,6 @@ export function createGallery(images) {
       )
       .join('');
 
-  refs.gallery.innerHTML = markup;
   lightbox.refresh();
 }
 
