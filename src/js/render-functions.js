@@ -53,6 +53,7 @@ export function hideLoader() {
 
 export function showLoadMore() {
   refs.loadMoreBtn.classList.remove('hidden');
+  refs.loadMoreBtn.scrollIntoView({ behavior: 'smooth', block: 'end' })
 }
 
 export function hideLoadMore() {

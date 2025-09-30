@@ -2,8 +2,10 @@ import { getImagesByQuery } from './js/pixabay-api.js';
 import {
   clearGallery,
   createGallery,
-  hideLoader, hideLoadMore,
-  showLoader, showLoadMore,
+  hideLoader,
+  hideLoadMore,
+  showLoader,
+  showLoadMore,
 } from './js/render-functions.js';
 import { refs } from './js/refs.js';
 
