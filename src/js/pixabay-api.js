@@ -5,9 +5,9 @@ const key = '52494269-f940d25beafa0bafe61525357';
 const url = 'https://pixabay.com/api/';
 const imagesPerPage = 9;
 
-export async function getImagesByQuery(query) {
+export async function getImagesByQuery(query, page) {
   try {
-    const response = await axios.get(url, getParams(query));
+    const response = await axios.get(url, getParams(query, page));
     const images = response.data.hits;
 
     if (!images || !images.length) {
@@ -24,7 +24,7 @@ export async function getImagesByQuery(query) {
   }
 }
 
-function getParams(query) {
+function getParams(query, page) {
   return {
     params: {
       key: key,
@@ -33,6 +33,7 @@ function getParams(query) {
       orientation: 'horizontal',
       safesearch: true,
       per_page: imagesPerPage,
+      page: page,
     },
   };
 }

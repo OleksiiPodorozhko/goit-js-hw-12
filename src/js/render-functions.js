@@ -5,7 +5,7 @@ import { refs } from './refs.js';
 const lightbox = new SimpleLightbox('.gallery a', {captionsData: 'alt', captionDelay: 250});
 
 export function createGallery(images) {
-  refs.gallery.innerHTML =
+  const markup =
     images
       .map(
         image =>
@@ -35,6 +35,7 @@ export function createGallery(images) {
       )
       .join('');
 
+  refs.gallery.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
 }
 
@@ -43,9 +44,17 @@ export function clearGallery() {
 }
 
 export function showLoader() {
-  refs.loader.classList.add('is-visible');
+  refs.loader.classList.remove('hidden');
 }
 
 export function hideLoader() {
-  refs.loader.classList.remove('is-visible');
+  refs.loader.classList.add('hidden');
+}
+
+export function showLoadMore() {
+  refs.loadMoreBtn.classList.remove('hidden');
+}
+
+export function hideLoadMore() {
+  refs.loadMoreBtn.classList.add('hidden');
 }
