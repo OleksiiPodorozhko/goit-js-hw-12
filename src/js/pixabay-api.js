@@ -3,7 +3,7 @@ import { showError, showInfo } from './iziToastHelper.js';
 
 const key = '52494269-f940d25beafa0bafe61525357';
 const url = 'https://pixabay.com/api/';
-const perPage = 9;
+const perPage = 15;
 
 export async function getImagesByQuery(query, page) {
   try {

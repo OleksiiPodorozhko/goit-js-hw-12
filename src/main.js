@@ -9,6 +9,7 @@ import {
   showLoadMoreButton,
 } from './js/render-functions.js';
 import { refs } from './js/refs.js';
+import { showError } from './js/iziToastHelper.js';
 
 let page = 1;
 let lastQuery = '';
@@ -18,7 +19,10 @@ refs.form.addEventListener('submit', async e => {
   const inputValue = e.target.elements['search-text'].value.trim();
   page = 1;
 
-  if (!inputValue) return;
+  if (!inputValue) {
+    showError('Please fill in this field!');
+    return;
+  }
 
   e.target.reset();
   clearGallery();
